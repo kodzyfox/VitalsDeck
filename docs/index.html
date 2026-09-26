@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VitalsDeck — Cyberpunk Hardware Telemetry for macOS</title>
+  <meta name="description" content="Ultra-lightweight native macOS menu bar app for live Apple Silicon temperatures, ASCII load gauges, floating HUD, and caffeine keep-awake." />
+  
+  <link rel="icon" type="image/png" href="screenshots/AppIcon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@400;600;700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #090a0f;
+      --card-bg: rgba(18, 20, 29, 0.7);
+      --card-border: rgba(255, 179, 0, 0.2);
+      --accent: #ffb300;
+      --accent-glow: rgba(255, 179, 0, 0.35);
+      --neon-cyan: #00f0ff;
+      --neon-pink: #ff0055;
+      --matrix-green: #00ff66;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --font-display: 'Outfit', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-display);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-image: 
+        radial-gradient(ellipse at 50% -20%, rgba(255, 179, 0, 0.15), transparent 70%),
+        radial-gradient(circle at 15% 85%, rgba(0, 240, 255, 0.08), transparent 40%),
+        radial-gradient(circle at 85% 70%, rgba(255, 0, 85, 0.08), transparent 40%);
+      background-attachment: fixed;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 980px;
+      padding: 40px 20px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .badge-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 179, 0, 0.1);
+      border: 1px solid rgba(255, 179, 0, 0.3);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--accent);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    h1 {
+      font-size: clamp(38px, 6vw, 62px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, #ffffff 40%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p.subtitle {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 28px;
+      line-height: 1.5;
+    }
+
+    /* Video Player Section */
+    .video-card {
+      width: 100%;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 12px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px var(--accent-glow);
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .video-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    video {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      display: block;
+      background: #000;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+
+    /* Action Buttons */
+    .cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 48px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 16px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+      box-shadow: 0 4px 20px var(--accent-glow);
+    }
+
+    .btn-primary:hover {
+      background: #ffc400;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(255, 179, 0, 0.5);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      width: 100%;
+      margin-bottom: 60px;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 24px;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .feature-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .feature-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .feature-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .feature-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      margin-top: auto;
+      padding-top: 40px;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="badge-bar">
+        ⚡ macOS 13+ • Apple Silicon & Intel • MIT Open Source
+      </div>
+      <h1>VitalsDeck</h1>
+      <p class="subtitle">
+        Сверхлёгкий киберпанк-мониторинг для macOS. Реальная температура CPU и GPU в строке меню, ASCII-шкалы нагрузки, режим защиты от сна Caffeine и плавающий HUD.
+      </p>
+    </header>
+
+    <!-- Main Video Player -->
+    <div class="video-card">
+      <video id="trailer-video" controls playsinline preload="auto" poster="screenshots/brag_poster.jpg">
+        <source src="video/brag.mp4" type="video/mp4" />
+        Ваш браузер не поддерживает воспроизведение HTML5 видео.
+      </video>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="cta-group">
+      <a class="btn btn-primary" href="https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-v1.0.0.dmg">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Скачать VitalsDeck.dmg
+      </a>
+      <a class="btn btn-secondary" href="https://github.com/kodzyfox/VitalsDeck">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        GitHub Repository
+      </a>
+    </div>
+
+    <!-- Features -->
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🌡️</div>
+        <div class="feature-title">Температура CPU & GPU</div>
+        <div class="feature-desc">Реальные датчики Apple Silicon без root-прав прямо в строке меню: «46°C».</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">ASCII Телеметрия</div>
+        <div class="feature-desc">Киберпанк-шкалы загрузки [██████░░░░] для процессора, видеоядра, памяти и сети.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">☕</div>
+        <div class="feature-title">Режим Caffeine</div>
+        <div class="feature-desc">Защита Mac от засыпания в 1 клик во время компиляции, рендера или долгих загрузок.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">Process Terminator</div>
+        <div class="feature-desc">Мгновенное завершение самых прожорливых процессов с защитой системных служб.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🪟</div>
+        <div class="feature-title">Плавающий HUD</div>
+        <div class="feature-desc">Виджет поверх всех окон с авто-магнитом к углам экрана и под чёлку дисплея.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🚀</div>
+        <div class="feature-title">&lt; 0.6% CPU Нагрузка</div>
+        <div class="feature-desc">Нативные системные вызовы ядра macOS C libproc. Не сажает батарею MacBook.</div>
+      </div>
+    </div>
+
+    <footer>
+      Crafted with Swift by <a href="https://github.com/kodzyfox">@kodzyfox</a> • Licensed under MIT
+    </footer>
+  </div>
+
+</body>
+</html>

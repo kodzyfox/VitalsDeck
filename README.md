@@ -14,7 +14,7 @@
 
 <br/>
 
-<a href="https://github.com/kodzyfox/VitalsDeck/blob/main/docs/video/brag.mp4">
+<a href="https://kodzyfox.github.io/VitalsDeck/">
   <img src="docs/screenshots/preview.gif" width="720" alt="VitalsDeck Animated Preview" style="max-width: 100%; border-radius: 8px;" />
 </a>
 
@@ -22,8 +22,8 @@
   <a href="https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-v1.0.0.dmg">
     <img src="https://img.shields.io/badge/⬇%20Download%20DMG-v1.0.0-007AFF?style=for-the-badge&logo=apple&logoColor=white" alt="Download DMG" />
   </a>
-  <a href="https://github.com/kodzyfox/VitalsDeck/blob/main/docs/video/brag.mp4">
-    <img src="https://img.shields.io/badge/▶%20Watch%20Video-Online%20(1080p)-FF0055?style=for-the-badge&logo=youtube&logoColor=white" alt="Watch Video Online" />
+  <a href="https://kodzyfox.github.io/VitalsDeck/">
+    <img src="https://img.shields.io/badge/▶%20Watch%20Showcase%20Video-Online%20(1080p)-FF0055?style=for-the-badge&logo=youtube&logoColor=white" alt="Watch Showcase Video" />
   </a>
   <a href="https://github.com/kodzyfox/VitalsDeck/releases/tag/v1.0.0">
     <img src="https://img.shields.io/badge/All%20Releases-v1.0.0-333333?style=for-the-badge&logo=github&logoColor=white" alt="Releases" />
@@ -76,7 +76,7 @@
 
 ### 🎬 Video Showcase
 
-▶️ **[Watch the full 1080p Video online in browser](https://github.com/kodzyfox/VitalsDeck/blob/main/docs/video/brag.mp4)** *(or [download offline MP4](https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-Trailer.mp4))*
+▶️ **[Watch the full 1080p Video with soundtrack in browser](https://kodzyfox.github.io/VitalsDeck/)** *(or [download offline MP4](https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-Trailer.mp4))*
 
 ---
 
@@ -128,7 +128,7 @@ open VitalsDeck.app
 
 ### 🎬 Видеоролик приложения
 
-▶️ **[Смотреть 1080p видео онлайн прямо в браузере](https://github.com/kodzyfox/VitalsDeck/blob/main/docs/video/brag.mp4)** *(или [скачать MP4](https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-Trailer.mp4))*
+▶️ **[Смотреть 1080p видеоролик со звуком прямо в браузере](https://kodzyfox.github.io/VitalsDeck/)** *(или [скачать MP4 файл](https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-Trailer.mp4))*
 
 ---
 
