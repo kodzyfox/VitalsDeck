@@ -10,6 +10,7 @@
 [![Language](https://img.shields.io/badge/Swift-6.0-red?style=flat-square&logo=swift)](https://swift.org)
 [![CPU Usage](https://img.shields.io/badge/CPU-%3C%200.6%25-brightgreen?style=flat-square)](https://github.com)
 [![RAM Usage](https://img.shields.io/badge/RAM-~14%20MB-brightgreen?style=flat-square)](https://github.com)
+[![Website](https://img.shields.io/badge/Website-Live%20Demo-ffb300?style=flat-square&logo=safari&logoColor=black)](https://kodzyfox.github.io/VitalsDeck/)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
 
 <br/>
