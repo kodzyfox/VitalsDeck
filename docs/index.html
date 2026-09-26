@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VitalsDeck — Cyberpunk Hardware Telemetry for macOS</title>
-  <meta name="description" content="Ultra-lightweight native macOS menu bar app for live Apple Silicon temperatures, ASCII load gauges, floating HUD, and caffeine keep-awake." />
+  <title id="page-title">VitalsDeck — Cyberpunk Hardware Telemetry for macOS</title>
+  <meta name="description" id="page-desc" content="Ultra-lightweight native macOS menu bar app for live Apple Silicon temperatures, ASCII load gauges, floating HUD, and caffeine keep-awake." />
   
   <link rel="icon" type="image/png" href="screenshots/AppIcon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -47,12 +47,75 @@
         radial-gradient(circle at 85% 70%, rgba(255, 0, 85, 0.08), transparent 40%);
       background-attachment: fixed;
       overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Fixed Language Switcher in Top Right */
+    .lang-switcher-wrap {
+      position: fixed;
+      top: 20px;
+      right: 24px;
+      z-index: 1000;
+    }
+
+    .lang-switcher {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(18, 20, 29, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 179, 0, 0.3);
+      border-radius: 999px;
+      padding: 4px;
+      gap: 3px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 179, 0, 0.15);
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+
+    .lang-switcher:hover {
+      border-color: rgba(255, 179, 0, 0.5);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 179, 0, 0.25);
+    }
+
+    .lang-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .lang-btn .flag-emoji {
+      font-size: 17px;
+      line-height: 1;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+    }
+
+    .lang-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: #000000;
+      font-weight: 700;
+      box-shadow: 0 2px 10px rgba(255, 179, 0, 0.4);
     }
 
     .container {
       width: 100%;
       max-width: 980px;
-      padding: 40px 20px 80px;
+      padding: 60px 20px 80px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -61,6 +124,7 @@
     header {
       text-align: center;
       margin-bottom: 32px;
+      max-width: 820px;
     }
 
     .badge-bar {
@@ -69,22 +133,22 @@
       gap: 8px;
       background: rgba(255, 179, 0, 0.1);
       border: 1px solid rgba(255, 179, 0, 0.3);
-      padding: 6px 14px;
+      padding: 6px 16px;
       border-radius: 999px;
       font-family: var(--font-mono);
       font-size: 13px;
       color: var(--accent);
-      margin-bottom: 16px;
+      margin-bottom: 18px;
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
 
     h1 {
-      font-size: clamp(38px, 6vw, 62px);
+      font-size: clamp(38px, 6vw, 64px);
       font-weight: 900;
       letter-spacing: -0.02em;
       line-height: 1.1;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
       background: linear-gradient(135deg, #ffffff 40%, var(--accent) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -93,9 +157,10 @@
     p.subtitle {
       font-size: clamp(16px, 2.5vw, 20px);
       color: var(--text-muted);
-      max-width: 680px;
+      max-width: 700px;
       margin: 0 auto 28px;
-      line-height: 1.5;
+      line-height: 1.55;
+      transition: opacity 0.2s;
     }
 
     /* Video Player Section */
@@ -138,7 +203,7 @@
       flex-wrap: wrap;
       gap: 16px;
       justify-content: center;
-      margin-bottom: 48px;
+      margin-bottom: 50px;
     }
 
     .btn {
@@ -237,18 +302,42 @@
     footer a:hover {
       text-decoration: underline;
     }
+
+    @media (max-width: 640px) {
+      .lang-switcher-wrap {
+        top: 14px;
+        right: 14px;
+      }
+      .container {
+        padding-top: 70px;
+      }
+    }
   </style>
 </head>
 <body>
 
+  <!-- Language Switcher in Top Right -->
+  <div class="lang-switcher-wrap">
+    <div class="lang-switcher" id="lang-switcher">
+      <button class="lang-btn active" id="btn-en" onclick="setLanguage('en')" aria-label="Switch to English">
+        <span class="flag-emoji">🇬🇧</span>
+        <span>EN</span>
+      </button>
+      <button class="lang-btn" id="btn-ru" onclick="setLanguage('ru')" aria-label="Переключить на русский">
+        <span class="flag-emoji">🇷🇺</span>
+        <span>RU</span>
+      </button>
+    </div>
+  </div>
+
   <div class="container">
     <header>
-      <div class="badge-bar">
+      <div class="badge-bar" id="badge-bar">
         ⚡ macOS 13+ • Apple Silicon & Intel • MIT Open Source
       </div>
       <h1>VitalsDeck</h1>
-      <p class="subtitle">
-        Сверхлёгкий киберпанк-мониторинг для macOS. Реальная температура CPU и GPU в строке меню, ASCII-шкалы нагрузки, режим защиты от сна Caffeine и плавающий HUD.
+      <p class="subtitle" id="subtitle">
+        Ultra-lightweight cyberpunk telemetry for macOS. Real die temperatures for CPU & GPU in your menu bar, retro ASCII load gauges, Caffeine sleep-prevention, and a floating HUD.
       </p>
     </header>
 
@@ -256,60 +345,181 @@
     <div class="video-card">
       <video id="trailer-video" controls playsinline preload="auto" poster="screenshots/brag_poster.jpg">
         <source src="video/brag.mp4" type="video/mp4" />
-        Ваш браузер не поддерживает воспроизведение HTML5 видео.
+        <span id="video-fallback">Your browser does not support HTML5 video.</span>
       </video>
     </div>
 
     <!-- Quick Actions -->
     <div class="cta-group">
-      <a class="btn btn-primary" href="https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-v1.0.0.dmg">
+      <a class="btn btn-primary" id="btn-download" href="https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-v1.0.0.dmg">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Скачать VitalsDeck.dmg
+        <span id="txt-download">Download VitalsDeck.dmg</span>
       </a>
-      <a class="btn btn-secondary" href="https://github.com/kodzyfox/VitalsDeck">
+      <a class="btn btn-secondary" id="btn-repo" href="https://github.com/kodzyfox/VitalsDeck">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-        GitHub Repository
+        <span id="txt-repo">GitHub Repository</span>
       </a>
     </div>
 
-    <!-- Features -->
+    <!-- Features Grid -->
     <div class="features-grid">
       <div class="feature-card">
         <div class="feature-icon">🌡️</div>
-        <div class="feature-title">Температура CPU & GPU</div>
-        <div class="feature-desc">Реальные датчики Apple Silicon без root-прав прямо в строке меню: «46°C».</div>
+        <div class="feature-title" id="feat-title-0">Real CPU & GPU Temps</div>
+        <div class="feature-desc" id="feat-desc-0">Live Apple Silicon die sensors directly in your menu bar without root permissions: e.g. "46°C".</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon">📊</div>
-        <div class="feature-title">ASCII Телеметрия</div>
-        <div class="feature-desc">Киберпанк-шкалы загрузки [██████░░░░] для процессора, видеоядра, памяти и сети.</div>
+        <div class="feature-title" id="feat-title-1">ASCII Telemetry</div>
+        <div class="feature-desc" id="feat-desc-1">Retro cyberpunk load meters [██████░░░░] for CPU, GPU, unified RAM, and network throughput.</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon">☕</div>
-        <div class="feature-title">Режим Caffeine</div>
-        <div class="feature-desc">Защита Mac от засыпания в 1 клик во время компиляции, рендера или долгих загрузок.</div>
+        <div class="feature-title" id="feat-title-2">Caffeine Mode</div>
+        <div class="feature-desc" id="feat-desc-2">Prevent your Mac from sleeping with 1 click during long code builds, renders, or downloads.</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon">⚡</div>
-        <div class="feature-title">Process Terminator</div>
-        <div class="feature-desc">Мгновенное завершение самых прожорливых процессов с защитой системных служб.</div>
+        <div class="feature-title" id="feat-title-3">Process Terminator</div>
+        <div class="feature-desc" id="feat-desc-3">Instant 1-click kill switch for top CPU & RAM hogs with built-in system safety guards.</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🪟</div>
-        <div class="feature-title">Плавающий HUD</div>
-        <div class="feature-desc">Виджет поверх всех окон с авто-магнитом к углам экрана и под чёлку дисплея.</div>
+        <div class="feature-title" id="feat-title-4">Floating HUD</div>
+        <div class="feature-desc" id="feat-desc-4">Always-on-top telemetry widget with magnetic screen docking and MacBook camera notch snapping.</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🚀</div>
-        <div class="feature-title">&lt; 0.6% CPU Нагрузка</div>
-        <div class="feature-desc">Нативные системные вызовы ядра macOS C libproc. Не сажает батарею MacBook.</div>
+        <div class="feature-title" id="feat-title-5">&lt; 0.6% CPU Footprint</div>
+        <div class="feature-desc" id="feat-desc-5">Native macOS C libproc kernel syscalls. Near-zero power draw — won't drain your MacBook battery.</div>
       </div>
     </div>
 
-    <footer>
+    <footer id="footer-text">
       Crafted with Swift by <a href="https://github.com/kodzyfox">@kodzyfox</a> • Licensed under MIT
     </footer>
   </div>
 
+  <script>
+    const translations = {
+      en: {
+        pageTitle: "VitalsDeck — Cyberpunk Hardware Telemetry for macOS",
+        pageDesc: "Ultra-lightweight native macOS menu bar app for live Apple Silicon temperatures, ASCII load gauges, floating HUD, and caffeine keep-awake.",
+        badge: "⚡ macOS 13+ • Apple Silicon & Intel • MIT Open Source",
+        subtitle: "Ultra-lightweight cyberpunk telemetry for macOS. Real die temperatures for CPU & GPU in your menu bar, retro ASCII load gauges, Caffeine sleep-prevention, and a floating HUD.",
+        downloadBtn: "Download VitalsDeck.dmg",
+        repoBtn: "GitHub Repository",
+        videoFallback: "Your browser does not support HTML5 video.",
+        features: [
+          {
+            title: "Real CPU & GPU Temps",
+            desc: "Live Apple Silicon die sensors directly in your menu bar without root permissions: e.g. \"46°C\"."
+          },
+          {
+            title: "ASCII Telemetry",
+            desc: "Retro cyberpunk load meters [██████░░░░] for CPU, GPU, unified RAM, and network throughput."
+          },
+          {
+            title: "Caffeine Mode",
+            desc: "Prevent your Mac from sleeping with 1 click during long code builds, renders, or downloads."
+          },
+          {
+            title: "Process Terminator",
+            desc: "Instant 1-click kill switch for top CPU & RAM hogs with built-in system safety guards."
+          },
+          {
+            title: "Floating HUD",
+            desc: "Always-on-top telemetry widget with magnetic screen docking and MacBook camera notch snapping."
+          },
+          {
+            title: "< 0.6% CPU Footprint",
+            desc: "Native macOS C libproc kernel syscalls. Near-zero power draw — won't drain your MacBook battery."
+          }
+        ],
+        footer: 'Crafted with Swift by <a href="https://github.com/kodzyfox">@kodzyfox</a> • Licensed under MIT'
+      },
+      ru: {
+        pageTitle: "VitalsDeck — Стильный киберпанк-мониторинг для macOS",
+        pageDesc: "Сверхлёгкая утилита мониторинга ресурсов macOS: температуры Apple Silicon в строке меню, ASCII-шкалы, плавающий HUD и защита от сна.",
+        badge: "⚡ macOS 13+ • Apple Silicon & Intel • MIT Open Source",
+        subtitle: "Сверхлёгкий киберпанк-мониторинг для macOS. Реальная температура CPU и GPU в строке меню, ASCII-шкалы нагрузки, режим защиты от сна Caffeine и плавающий HUD.",
+        downloadBtn: "Скачать VitalsDeck.dmg",
+        repoBtn: "Репозиторий GitHub",
+        videoFallback: "Ваш браузер не поддерживает воспроизведение HTML5 видео.",
+        features: [
+          {
+            title: "Температура CPU & GPU",
+            desc: "Реальные датчики Apple Silicon без root-прав прямо в строке меню: «46°C»."
+          },
+          {
+            title: "ASCII Телеметрия",
+            desc: "Киберпанк-шкалы загрузки [██████░░░░] для процессора, видеоядра, памяти и сети."
+          },
+          {
+            title: "Режим Caffeine",
+            desc: "Защита Mac от засыпания в 1 клик во время компиляции, рендера или долгих загрузок."
+          },
+          {
+            title: "Process Terminator",
+            desc: "Мгновенное завершение самых прожорливых процессов с защитой системных служб."
+          },
+          {
+            title: "Плавающий HUD",
+            desc: "Виджет поверх всех окон с авто-магнитом к углам экрана и под чёлку дисплея."
+          },
+          {
+            title: "< 0.6% CPU Нагрузка",
+            desc: "Нативные системные вызовы ядра macOS C libproc. Не сажает батарею MacBook."
+          }
+        ],
+        footer: 'Создано на Swift автором <a href="https://github.com/kodzyfox">@kodzyfox</a> • Лицензия MIT'
+      }
+    };
+
+    function setLanguage(lang) {
+      if (!translations[lang]) return;
+      const t = translations[lang];
+
+      document.documentElement.lang = lang;
+      document.getElementById('page-title').textContent = t.pageTitle;
+      document.getElementById('page-desc').setAttribute('content', t.pageDesc);
+      document.getElementById('badge-bar').textContent = t.badge;
+      document.getElementById('subtitle').textContent = t.subtitle;
+      document.getElementById('txt-download').textContent = t.downloadBtn;
+      document.getElementById('txt-repo').textContent = t.repoBtn;
+      document.getElementById('video-fallback').textContent = t.videoFallback;
+
+      t.features.forEach((f, i) => {
+        const titleEl = document.getElementById('feat-title-' + i);
+        const descEl = document.getElementById('feat-desc-' + i);
+        if (titleEl) titleEl.textContent = f.title;
+        if (descEl) descEl.textContent = f.desc;
+      });
+
+      document.getElementById('footer-text').innerHTML = t.footer;
+
+      // Update button states
+      const btnEn = document.getElementById('btn-en');
+      const btnRu = document.getElementById('btn-ru');
+      if (lang === 'en') {
+        btnEn.classList.add('active');
+        btnRu.classList.remove('active');
+      } else {
+        btnRu.classList.add('active');
+        btnEn.classList.remove('active');
+      }
+    }
+
+    // Always open in English by default as requested
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlLang = urlParams.get('lang');
+      if (urlLang === 'ru') {
+        setLanguage('ru');
+      } else {
+        setLanguage('en');
+      }
+    });
+  </script>
 </body>
 </html>
