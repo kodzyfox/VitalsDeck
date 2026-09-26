@@ -14,16 +14,19 @@
 
 <br/>
 
-<a href="https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-Trailer.mp4">
+<a href="https://github.com/kodzyfox/VitalsDeck/blob/main/docs/video/brag.mp4">
   <img src="docs/screenshots/preview.gif" width="720" alt="VitalsDeck Animated Preview" style="max-width: 100%; border-radius: 8px;" />
 </a>
 
 <p align="center">
-  <a href="https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-Trailer.mp4">
-    <img src="https://img.shields.io/badge/▶%20Watch%20Showcase%20Video-1080p%20HD-FF0055?style=for-the-badge&logo=youtube&logoColor=white" alt="Watch Showcase Video" />
+  <a href="https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-v1.0.0.dmg">
+    <img src="https://img.shields.io/badge/⬇%20Download%20DMG-v1.0.0-007AFF?style=for-the-badge&logo=apple&logoColor=white" alt="Download DMG" />
+  </a>
+  <a href="https://github.com/kodzyfox/VitalsDeck/blob/main/docs/video/brag.mp4">
+    <img src="https://img.shields.io/badge/▶%20Watch%20Video-Online%20(1080p)-FF0055?style=for-the-badge&logo=youtube&logoColor=white" alt="Watch Video Online" />
   </a>
   <a href="https://github.com/kodzyfox/VitalsDeck/releases/tag/v1.0.0">
-    <img src="https://img.shields.io/badge/Release-v1.0.0-blue?style=for-the-badge&logo=github&logoColor=white" alt="Release v1.0.0" />
+    <img src="https://img.shields.io/badge/All%20Releases-v1.0.0-333333?style=for-the-badge&logo=github&logoColor=white" alt="Releases" />
   </a>
 </p>
 
@@ -71,15 +74,26 @@
   <img src="docs/screenshots/settings.png" width="220" />
 </div>
 
-### 🎬 Video Preview & Trailer
+### 🎬 Video Showcase
 
-https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-Trailer.mp4
+▶️ **[Watch the full 1080p Video online in browser](https://github.com/kodzyfox/VitalsDeck/blob/main/docs/video/brag.mp4)** *(or [download offline MP4](https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-Trailer.mp4))*
 
-> 💡 *Quick 25-second cinematic overview showing menu bar stats, themes in action, and the floating HUD. High-res MP4 with soundtrack also available in [Releases](https://github.com/kodzyfox/VitalsDeck/releases/tag/v1.0.0).*
+---
 
-### 🛠️ Build & Install
+### 📦 Download & Quick Install
 
-Requirements: macOS 13.0+ and Xcode Command Line Tools.
+The easiest way to get VitalsDeck is by downloading the pre-built disk image:
+
+1. Download **[VitalsDeck-v1.0.0.dmg](https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-v1.0.0.dmg)** (or [.zip archive](https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-v1.0.0.zip)) from [Releases](https://github.com/kodzyfox/VitalsDeck/releases/latest).
+2. Open the `.dmg` and drag **VitalsDeck.app** into your **Applications** folder.
+3. Launch VitalsDeck — real-time temperatures and telemetry meters will immediately appear in your menu bar!
+
+> 💡 *On first launch, if macOS Gatekeeper displays a security notice for open-source apps, right-click `VitalsDeck.app` and select **Open**, or go to **System Settings > Privacy & Security** and click **Open Anyway**.*
+
+<details>
+<summary><b>🛠️ Build from Source (For Developers)</b></summary>
+
+Requirements: macOS 13.0+ and Xcode Command Line Tools (`xcode-select --install`).
 
 ```bash
 # Clone the repository
@@ -92,6 +106,7 @@ cd VitalsDeck
 # Launch VitalsDeck
 open VitalsDeck.app
 ```
+</details>
 
 ---
 
@@ -113,11 +128,22 @@ open VitalsDeck.app
 
 ### 🎬 Видеоролик приложения
 
-https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-Trailer.mp4
+▶️ **[Смотреть 1080p видео онлайн прямо в браузере](https://github.com/kodzyfox/VitalsDeck/blob/main/docs/video/brag.mp4)** *(или [скачать MP4](https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-Trailer.mp4))*
 
-> 💡 *Короткий 25-секундный обзор возможностей утилиты: температура в статус-баре, 5 цветовых тем и плавающий HUD. Ролик в 1080p также прикреплен в [Releases](https://github.com/kodzyfox/VitalsDeck/releases/tag/v1.0.0).*
+---
 
-### 🛠️ Сборка и запуск
+### 📦 Скачивание и установка
+
+Самый простой способ — использовать готовый образ диска:
+
+1. Скачайте **[VitalsDeck-v1.0.0.dmg](https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-v1.0.0.dmg)** (или [.zip архив](https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-v1.0.0.zip)) со страницы [Релизы](https://github.com/kodzyfox/VitalsDeck/releases/latest).
+2. Откройте скачанный `.dmg` и перетащите **VitalsDeck.app** в папку **«Программы» (Applications)**.
+3. Запустите VitalsDeck — датчики температуры и системные шкалы мгновенно появятся в строке меню macOS!
+
+> 💡 *При первом запуске macOS может предупредить о неподтвержденном разработчике: просто нажмите правой кнопкой мыши по `VitalsDeck.app` -> **«Открыть»** (Open), либо перейдите в **Системные настройки > Конфиденциальность и безопасность** и нажмите **«Подтвердить вход»**.*
+
+<details>
+<summary><b>🛠️ Сборка из исходников (Для разработчиков)</b></summary>
 
 Требования: macOS 13.0+ и установленные инструменты разработчика Xcode (`xcode-select --install`).
 
@@ -132,6 +158,7 @@ cd VitalsDeck
 # Запустить
 open VitalsDeck.app
 ```
+</details>
 
 ---
 
