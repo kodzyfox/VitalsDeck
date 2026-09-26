@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+# Xcode & Swift Package Manager
+.build/
+*.xcodeproj
+*.xcworkspace
+DerivedData/
+xcuserdata/
+
+# Compiled Application
+*.app
+*.dSYM
+
+# Node & Caches
+node_modules/
+*.log
+.cache/
+brag-output/composition/node_modules/
+brag-output/composition/.cache/

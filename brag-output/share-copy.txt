@@ -1,0 +1,1 @@
+Meet VitalsDeck — a cyberpunk hardware telemetry deck and floating HUD for macOS. Real Apple Silicon CPU/GPU temperatures right in your menu bar (46°C), live ASCII load meters, 1-click Caffeine mode, 5 aesthetic themes, and modular settings with 0% CPU lag.
