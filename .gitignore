@@ -21,3 +21,6 @@ node_modules/
 .cache/
 brag-output/composition/node_modules/
 brag-output/composition/.cache/
+# Distribution Packages
+*.dmg
+*.zip
