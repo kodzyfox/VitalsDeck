@@ -765,10 +765,17 @@ public struct VitalsDeckPopoverView: View {
         )
     }
     
+    private var appVersionString: String {
+        if let ver = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String, !ver.isEmpty {
+            return ver
+        }
+        return "1.2"
+    }
+
     // MARK: - Footer Bar
     private var footerBar: some View {
         HStack {
-            Text("VITALS DECK v1.1")
+            Text("VITALS DECK v\(appVersionString)")
                 .font(.system(size: 8, weight: .medium, design: .monospaced))
                 .foregroundColor(currentTheme.textSecondary.opacity(0.7))
             
