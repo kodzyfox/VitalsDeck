@@ -79,9 +79,10 @@ public final class StatusBarController: NSObject {
             case .cpuTemp:
                 button.title = " \(monitor.cpuTemperatureString)"
             case .cpuAndGpuTemp:
-                if let gpuT = monitor.gpuTemperature {
-                    let cpuT = monitor.cpuTemperature ?? Double(monitor.thermalEstimateCelsius)
+                if let gpuT = monitor.gpuTemperature, let cpuT = monitor.cpuTemperature {
                     button.title = String(format: " C:%.0f° G:%.0f°", cpuT, gpuT)
+                } else if let gpuT = monitor.gpuTemperature {
+                    button.title = String(format: " C:N/A G:%.0f°", gpuT)
                 } else {
                     button.title = " \(monitor.cpuTemperatureString)"
                 }

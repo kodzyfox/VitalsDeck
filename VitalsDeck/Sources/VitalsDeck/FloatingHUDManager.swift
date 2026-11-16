@@ -77,6 +77,12 @@ public final class FloatingHUDManager: ObservableObject {
         UserDefaults.standard.set(enabled, forKey: "VitalsDeck_HUD_MagneticSnap")
     }
     
+    public func setLayout(_ layout: HUDLayout) {
+        self.layout = layout
+        UserDefaults.standard.set(layout.rawValue, forKey: "VitalsDeck_HUD_Layout")
+        updatePanelSizeForLayout()
+    }
+
     public func updatePanelSizeForLayout() {
         guard let panel = hudPanel else { return }
         let currentOrigin = panel.frame.origin
@@ -266,11 +272,7 @@ struct FloatingHUDContainerView: View {
         )
         let layoutBinding = Binding<HUDLayout>(
             get: { manager.layout },
-            set: {
-                manager.layout = $0
-                UserDefaults.standard.set($0.rawValue, forKey: "VitalsDeck_HUD_Layout")
-                manager.updatePanelSizeForLayout()
-            }
+            set: { manager.setLayout($0) }
         )
         let opacityBinding = Binding<Double>(
             get: { manager.opacity },

@@ -48,10 +48,8 @@ public final class SystemMonitor: ObservableObject {
     @Published public var uptimeString: String = "0h 0m"
     
     public var cpuTemperatureString: String {
-        if let t = cpuTemperature {
-            return String(format: "%.0f°C", t)
-        }
-        return "\(thermalEstimateCelsius)°C"
+        guard let temperature = cpuTemperature else { return "N/A" }
+        return String(format: "%.0f°C", temperature)
     }
     
     public var gpuTemperatureString: String {
@@ -196,10 +194,10 @@ public final class SystemMonitor: ObservableObject {
 
             for i in 0..<Int(numProcessors) {
                 let offset = Int32(CPU_STATE_MAX) * Int32(i)
-                let user = UInt64(cpuInfo[Int(offset + CPU_STATE_USER)] - prev[Int(offset + CPU_STATE_USER)])
-                let system = UInt64(cpuInfo[Int(offset + CPU_STATE_SYSTEM)] - prev[Int(offset + CPU_STATE_SYSTEM)])
-                let nice = UInt64(cpuInfo[Int(offset + CPU_STATE_NICE)] - prev[Int(offset + CPU_STATE_NICE)])
-                let idle = UInt64(cpuInfo[Int(offset + CPU_STATE_IDLE)] - prev[Int(offset + CPU_STATE_IDLE)])
+                let user = Self.cpuCounterDelta(cpuInfo[Int(offset + CPU_STATE_USER)], prev[Int(offset + CPU_STATE_USER)])
+                let system = Self.cpuCounterDelta(cpuInfo[Int(offset + CPU_STATE_SYSTEM)], prev[Int(offset + CPU_STATE_SYSTEM)])
+                let nice = Self.cpuCounterDelta(cpuInfo[Int(offset + CPU_STATE_NICE)], prev[Int(offset + CPU_STATE_NICE)])
+                let idle = Self.cpuCounterDelta(cpuInfo[Int(offset + CPU_STATE_IDLE)], prev[Int(offset + CPU_STATE_IDLE)])
 
                 let used = user + system + nice
                 let total = used + idle
@@ -311,7 +309,8 @@ public final class SystemMonitor: ObservableObject {
         
         while let p = ptr {
             let name = String(cString: p.pointee.ifa_name)
-            if p.pointee.ifa_addr.pointee.sa_family == UInt8(AF_LINK),
+            if let address = p.pointee.ifa_addr,
+               address.pointee.sa_family == UInt8(AF_LINK),
                let data = p.pointee.ifa_data {
                 let netData = data.assumingMemoryBound(to: if_data.self)
                 // Filter for primary hardware network interfaces
@@ -427,6 +426,11 @@ public final class SystemMonitor: ObservableObject {
         self.uptimeString = "\(hours)h \(minutes)m"
     }
     
+    static func cpuCounterDelta(_ current: integer_t, _ previous: integer_t) -> UInt64 {
+        guard current >= previous else { return 0 }
+        return UInt64(current - previous)
+    }
+
     // MARK: - Formatters
     public static func formatBytesRate(_ bytesPerSec: Double) -> String {
         if bytesPerSec < 1024 {

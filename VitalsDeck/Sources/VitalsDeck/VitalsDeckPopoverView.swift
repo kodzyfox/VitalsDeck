@@ -454,7 +454,7 @@ public struct VitalsDeckPopoverView: View {
             // Confirmed! Execute Force Kill
             resetTimer?.invalidate()
             confirmingKillPid = nil
-            let success = processMonitor.killProcess(pid: proc.pid, force: true)
+            let success = processMonitor.killProcess(proc, force: true)
             if success {
                 killFeedbackMessage = settings.language == .ru ? "Завершён '\(proc.name)' (#\(proc.pid))" : "Terminated '\(proc.name)' (#\(proc.pid))"
             } else {
@@ -628,7 +628,10 @@ public struct VitalsDeckPopoverView: View {
             
             HStack(spacing: 8) {
                 // Layout Picker
-                Picker("", selection: $hud.layout) {
+                Picker("", selection: Binding(
+                    get: { hud.layout },
+                    set: { hud.setLayout($0) }
+                )) {
                     ForEach(HUDLayout.allCases) { lay in
                         Text(lay.rawValue).tag(lay)
                     }

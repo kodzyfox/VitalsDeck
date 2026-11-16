@@ -140,14 +140,37 @@ public final class ProcessMonitor: ObservableObject {
     }
 
     @discardableResult
-    public func killProcess(pid: Int32, force: Bool = true) -> Bool {
+    public func killProcess(_ process: MonitoredProcess, force: Bool = true) -> Bool {
+        let pid = process.pid
         guard pid > 1 && pid != myPid else {
             self.lastKillStatus = "Cannot terminate protected system process"
             return false
         }
 
-        if let proc = topProcesses.first(where: { $0.pid == pid }), proc.isSystemProtected {
-            self.lastKillStatus = "Process '\(proc.name)' is protected"
+        guard let currentProcess = topProcesses.first(where: { $0.pid == pid }),
+              currentProcess.command == process.command else {
+            self.lastKillStatus = "Process list is stale; refresh and try again"
+            refreshProcesses()
+            return false
+        }
+
+        var nameBuffer = [CChar](repeating: 0, count: 1024)
+        guard proc_name(pid, &nameBuffer, UInt32(nameBuffer.count)) > 0 else {
+            self.lastKillStatus = "Process already exited"
+            topProcesses.removeAll { $0.pid == pid }
+            return false
+        }
+        let liveName = nameBuffer.withUnsafeBufferPointer { buffer in
+            String(decoding: buffer.prefix(while: { $0 != 0 }).map(UInt8.init), as: UTF8.self)
+        }
+        guard liveName == process.command else {
+            self.lastKillStatus = "Process changed; refresh and try again"
+            refreshProcesses()
+            return false
+        }
+        guard !process.isSystemProtected,
+              !Self.protectedProcessNames.contains(liveName), pid > 100 else {
+            self.lastKillStatus = "Process '\(process.name)' is protected"
             return false
         }
 

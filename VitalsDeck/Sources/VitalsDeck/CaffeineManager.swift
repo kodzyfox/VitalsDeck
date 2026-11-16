@@ -99,12 +99,15 @@ public final class CaffeineManager: ObservableObject {
         
         // Optional display sleep prevention
         if preventDisplaySleep {
-            _ = IOPMAssertionCreateWithName(
+            let displayResult = IOPMAssertionCreateWithName(
                 kIOPMAssertionTypePreventUserIdleDisplaySleep as CFString,
                 IOPMAssertionLevel(kIOPMAssertionLevelOn),
                 reason,
                 &displayAssertionID
             )
+            if displayResult != kIOReturnSuccess {
+                displayAssertionID = 0
+            }
         }
         
         if sysResult == kIOReturnSuccess {
@@ -113,7 +116,13 @@ public final class CaffeineManager: ObservableObject {
                 remainingSeconds = totalSec
                 startTimer()
             } else {
-                remainingSeconds = 0 // Indefinite
+                remainingSeconds = 0
+            }
+        } else {
+            assertionID = 0
+            if displayAssertionID != 0 {
+                _ = IOPMAssertionRelease(displayAssertionID)
+                displayAssertionID = 0
             }
         }
     }

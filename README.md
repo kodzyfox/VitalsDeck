@@ -12,6 +12,7 @@
 [![RAM Usage](https://img.shields.io/badge/RAM-~14%20MB-brightgreen?style=flat-square)](https://github.com)
 [![Website](https://img.shields.io/badge/Website-Live%20Demo-ffb300?style=flat-square&logo=safari&logoColor=black)](https://kodzyfox.github.io/VitalsDeck/)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
+[![Changelog](https://img.shields.io/badge/Changelog-v1.2.0-blueviolet?style=flat-square)](CHANGELOG.md)
 
 <br/>
 
@@ -20,14 +21,14 @@
 </a>
 
 <p align="center">
-  <a href="https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-v1.0.0.dmg">
-    <img src="https://img.shields.io/badge/⬇%20Download%20DMG-v1.0.0-007AFF?style=for-the-badge&logo=apple&logoColor=white" alt="Download DMG" />
+  <a href="https://github.com/kodzyfox/VitalsDeck/releases/download/v1.2.0/VitalsDeck-v1.2.0.dmg">
+    <img src="https://img.shields.io/badge/⬇%20Download%20DMG-v1.2.0-007AFF?style=for-the-badge&logo=apple&logoColor=white" alt="Download DMG" />
   </a>
   <a href="https://kodzyfox.github.io/VitalsDeck/">
     <img src="https://img.shields.io/badge/▶%20Watch%20Showcase%20Video-Online%20(1080p)-FF0055?style=for-the-badge&logo=youtube&logoColor=white" alt="Watch Showcase Video" />
   </a>
-  <a href="https://github.com/kodzyfox/VitalsDeck/releases/tag/v1.0.0">
-    <img src="https://img.shields.io/badge/All%20Releases-v1.0.0-333333?style=for-the-badge&logo=github&logoColor=white" alt="Releases" />
+  <a href="https://github.com/kodzyfox/VitalsDeck/releases/tag/v1.2.0">
+    <img src="https://img.shields.io/badge/All%20Releases-v1.2.0-333333?style=for-the-badge&logo=github&logoColor=white" alt="Releases" />
   </a>
 </p>
 
@@ -85,7 +86,7 @@
 
 The easiest way to get VitalsDeck is by downloading the pre-built disk image:
 
-1. Download **[VitalsDeck-v1.0.0.dmg](https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-v1.0.0.dmg)** (or [.zip archive](https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-v1.0.0.zip)) from [Releases](https://github.com/kodzyfox/VitalsDeck/releases/latest).
+1. Download **[VitalsDeck-v1.2.0.dmg](https://github.com/kodzyfox/VitalsDeck/releases/download/v1.2.0/VitalsDeck-v1.2.0.dmg)** (or [.zip archive](https://github.com/kodzyfox/VitalsDeck/releases/download/v1.2.0/VitalsDeck-v1.2.0.zip)) from [Releases](https://github.com/kodzyfox/VitalsDeck/releases/latest).
 2. Open the `.dmg` and drag **VitalsDeck.app** into your **Applications** folder.
 3. Launch VitalsDeck — real-time temperatures and telemetry meters will immediately appear in your menu bar!
 
@@ -137,7 +138,7 @@ open VitalsDeck.app
 
 Самый простой способ — использовать готовый образ диска:
 
-1. Скачайте **[VitalsDeck-v1.0.0.dmg](https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-v1.0.0.dmg)** (или [.zip архив](https://github.com/kodzyfox/VitalsDeck/releases/download/v1.0.0/VitalsDeck-v1.0.0.zip)) со страницы [Релизы](https://github.com/kodzyfox/VitalsDeck/releases/latest).
+1. Скачайте **[VitalsDeck-v1.2.0.dmg](https://github.com/kodzyfox/VitalsDeck/releases/download/v1.2.0/VitalsDeck-v1.2.0.dmg)** (или [.zip архив](https://github.com/kodzyfox/VitalsDeck/releases/download/v1.2.0/VitalsDeck-v1.2.0.zip)) со страницы [Релизы](https://github.com/kodzyfox/VitalsDeck/releases/latest).
 2. Откройте скачанный `.dmg` и перетащите **VitalsDeck.app** в папку **«Программы» (Applications)**.
 3. Запустите VitalsDeck — датчики температуры и системные шкалы мгновенно появятся в строке меню macOS!
 
